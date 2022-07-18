@@ -1,12 +1,11 @@
 <?php
 
-use test\Point;
-use test\Quadrangle;
+include "autoload.php";
+
 use test\Rectangle;
+use test\Circle;
 
-include 'autoload.php';
-
-$rectangle = new Rectangle(2, 4, 2, 4, 90);
-$rectangle->calcArea();
-echo $rectangle->area;
+$figure1 = Rectangle::createInstanceSecond(2,2,3,3,90);
+$figure2 = Rectangle::createInstanceFirst(2,2);
+var_dump($figure2);
 

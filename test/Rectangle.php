@@ -2,17 +2,27 @@
 
 namespace test;
 
-class Rectangle extends Quadrangle
+class Rectangle extends Quadrangle implements ICalculationParams
 {
-    public $alpha;
+    use Collect;
 
-    /**
-     * @throws \Exception
-     */
-    function __construct($a, $b, $c, $d, $alpha)
+    public $alpha;
+    public $width;
+    public $height;
+
+    static function createInstanceFirst($w, $h): Rectangle
     {
-        if ($this->isRectangle($a, $b, $c, $d, $alpha)) {
-            $this->alpha = $alpha;
+        $instance = new self();
+        $instance->width = $w;
+        $instance->height = $h;
+        return $instance;
+    }
+
+    static function createInstanceSecond($a, $b, $c, $d, $alpha): Rectangle
+    {
+        $instance = new self();
+        if (self::isRectangle($a, $b, $c, $d, $alpha, $instance)) {
+            return $instance;
         } else {
             throw new \Exception("Данная фигура не является 4-x угольником");
         }
@@ -21,22 +31,25 @@ class Rectangle extends Quadrangle
     function calcArea()
     {
         $this->area = $this->a * $this->b;
+        return $this->area;
     }
 
     function calcPerimeter()
     {
         $this->perimeter = 2 * ($this->a + $this->b);
+        return $this->perimeter;
     }
 
-    function isRectangle($a, $b, $c, $d, $alpha)
+    static function isRectangle($a, $b, $c, $d, $alpha, $instance)
     {
         $sides = [$a, $b, $c, $d];
         sort($sides);
         if ($sides[0] == $sides[1] && $sides[2] == $sides[3] && $alpha == 90) {
-            $this->a = $sides[0];
-            $this->c = $sides[0];
-            $this->b = $sides[2];
-            $this->d = $sides[2];
+            $instance->a = $sides[0];
+            $instance->c = $sides[0];
+            $instance->b = $sides[2];
+            $instance->d = $sides[2];
+            $instance->alpha = $alpha;
             return true;
         } else {
             return false;

@@ -17,8 +17,4 @@ class Point
     {
         echo "Point: x - {$this->x}, y - {$this->y}";
     }
-
-    static function test() {
-        echo 'test';
-    }
 }
